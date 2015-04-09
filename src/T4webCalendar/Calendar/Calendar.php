@@ -4,8 +4,9 @@ namespace T4webCalendar\Calendar;
 
 use T4webBase\Domain\Entity;
 
-class Calendar extends Entity {
-    
+class Calendar extends Entity
+{
+
     protected $name;
     protected $date;
 

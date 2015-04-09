@@ -18,11 +18,11 @@ return array(
             'calendar' => array(
                 'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/calendar',
+                    'route' => '/calendar',
                     'defaults' => array(
                         '__NAMESPACE__' => 'T4webCalendar\Controller\User',
-                        'controller'    => 'Show',
-                        'action'        => 'default',
+                        'controller' => 'Show',
+                        'action' => 'default',
                     ),
                 ),
             ),
@@ -30,15 +30,16 @@ return array(
     ),
 
     'console' => array(
+
         'router' => array(
             'routes' => array(
                 'calendar-init' => array(
                     'options' => array(
-                        'route'    => 'calendar init',
+                        'route' => 'calendar init',
                         'defaults' => array(
                             '__NAMESPACE__' => 'T4webCalendar\Controller\Console',
                             'controller' => 'Init',
-                            'action'     => 'run'
+                            'action' => 'run'
                         )
                     )
                 ),
@@ -61,7 +62,19 @@ return array(
 
     'criteries' => array(
         'Calendar' => array(
-            'empty' => array('table' => 'calendar'),
+            'empty' => array(
+                'table' => 'calendar',
+            ),
+            'id' => array(
+                'table' => 'calendar',
+                'field' => 'id',
+                'buildMethod' => 'addFilterEqual',
+            ),
+            'ids' => array(
+                'table' => 'calendar',
+                'field' => 'id',
+                'buildMethod' => 'addFilterIn',
+            ),
         ),
     ),
 );

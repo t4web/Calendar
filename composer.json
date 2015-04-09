@@ -1,44 +1,42 @@
 {
-    "name": "t4web/calendar",
-    "description": "ZF2 Module for edit holidays",
-    "type": "library",
-    "license": "BSD-3-Clause",
-    "keywords": [
-        "zf2",
-        "calendar"
-    ],
-    "homepage": "https://github.com/t4web/Calendar",
-    "authors": [
-        {
-            "name": "Max Gulturyan",
-            "email": "gulturyan@gmail.com",
-            "homepage": "http://about.me/maxgu"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/t4web/base.git"
-        }
-    ],
-    "require": {
-        "php": ">=5.4.0",
-        "zendframework/zendframework": "2.4.*",
-        "league/flysystem": "0.5.*",
-        "falc/flysystem-local-symlink-plugin": "1.0.*",
-
-        "t4web/base": "dev-master"
-    },
-    "require-dev" : {
-        "codeception/codeception": "2.*"
-    },
-
-    "autoload": {
-        "psr-0": {
-            "T4webCalendar": "src/"
-        },
-        "classmap": [
-            "./Module.php"
-        ]
+  "name": "t4web/calendar",
+  "description": "ZF2 Module for edit holidays",
+  "type": "library",
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "zf2",
+    "calendar"
+  ],
+  "homepage": "https://github.com/t4web/Calendar",
+  "authors": [
+    {
+      "name": "Max Gulturyan",
+      "email": "gulturyan@gmail.com",
+      "homepage": "http://about.me/maxgu"
     }
+  ],
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/t4web/base.git"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "zendframework/zendframework": "2.4.*",
+    "league/flysystem": "0.5.*",
+    "falc/flysystem-local-symlink-plugin": "1.0.*",
+    "t4web/base": "dev-master"
+  },
+  "require-dev": {
+    "codeception/codeception": "2.*"
+  },
+  "autoload": {
+    "psr-0": {
+      "T4webCalendar": "src/"
+    },
+    "classmap": [
+      "./Module.php"
+    ]
+  }
 }

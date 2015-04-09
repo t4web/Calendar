@@ -11,7 +11,8 @@ use Zend\Db\Sql\Sql;
 use PDOException;
 use League\Flysystem\Filesystem;
 
-class InitController extends AbstractActionController {
+class InitController extends AbstractActionController
+{
 
     /**
      * @var Adapter
@@ -23,12 +24,14 @@ class InitController extends AbstractActionController {
      */
     private $fileSystem;
 
-    public function __construct(Adapter $dbAdapter, Filesystem $fileSystem){
+    public function __construct(Adapter $dbAdapter, Filesystem $fileSystem)
+    {
         $this->dbAdapter = $dbAdapter;
         $this->fileSystem = $fileSystem;
     }
 
-    public function runAction() {
+    public function runAction()
+    {
 
         $this->createTableCalendar();
 
@@ -44,7 +47,8 @@ class InitController extends AbstractActionController {
         return "Success completed" . PHP_EOL;
     }
 
-    private function createTableCalendar() {
+    private function createTableCalendar()
+    {
         $table = new Ddl\CreateTable('calendar');
 
         $id = new Column\Integer('id');
