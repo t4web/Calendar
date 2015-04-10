@@ -1,4 +1,4 @@
-(function () {
+$(function () {
     const today = new Date();
     const y = today.getFullYear();
 

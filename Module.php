@@ -15,6 +15,7 @@ use Falc\Flysystem\Plugin\Symlink\Local as LocalSymlinkPlugin;
 
 use T4webBase\Domain\Service\Create as ServiceCreate;
 use T4webBase\Domain\Service\Update as ServiceUpdate;
+use T4webBase\Domain\Service\Delete as ServiceDelete;
 use T4webBase\Domain\Service\BaseFinder as ServiceFinder;
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface,
@@ -72,6 +73,17 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface,
                     );
                 },
 
+                'T4webCalendar\Calendar\Service\Delete' => function (ServiceManager $sm) {
+                    $eventManager = $sm->get('EventManager');
+                    $eventManager->addIdentifiers('T4webCalendar\Calendar\Service\Delete');
+
+                    return new ServiceDelete(
+                        $sm->get('T4webCalendar\Calendar\Repository\DbRepository'),
+                        $sm->get('T4webCalendar\Calendar\Criteria\CriteriaFactory'),
+                        $eventManager
+                    );
+                },
+
                 'T4webCalendar\Calendar\Service\Finder' => function (ServiceManager $sm) {
                     return new ServiceFinder(
                         $sm->get('T4webCalendar\Calendar\Repository\DbRepository'),
@@ -116,6 +128,9 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface,
                 'T4webCalendar\Controller\User\Ajax' => function (ControllerManager $cm) {
                     $sl = $cm->getServiceLocator();
                     return new Controller\User\AjaxController(
+                        $sl->get('T4webCalendar\Calendar\Service\Finder'),
+                        $sl->get('T4webCalendar\Calendar\Service\Create'),
+                        $sl->get('T4webCalendar\Calendar\Service\Delete'),
                         $sl->get('T4webCalendar\Controller\ViewModel\AjaxViewModel')
                     );
                 },
