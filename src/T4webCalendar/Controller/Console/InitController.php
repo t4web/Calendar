@@ -32,12 +32,25 @@ class InitController extends AbstractActionController
 
     public function runAction()
     {
-
         $this->createTableCalendar();
 
         $vendorSiteConfigRootPath = dirname(dirname(dirname(dirname(__DIR__))));
 
         if (!$this->fileSystem->has('/public/js/t4web-calendar/add.js')) {
+            $this->fileSystem->symlink(
+                $vendorSiteConfigRootPath . '/public/js/t4web-calendar/',
+                getcwd() . '/public/js/t4web-calendar'
+            );
+        }
+
+        if (!$this->fileSystem->has('/public/js/t4web-calendar/jquery-ui.multidatespicker.js')) {
+            $this->fileSystem->symlink(
+                $vendorSiteConfigRootPath . '/public/js/t4web-calendar/',
+                getcwd() . '/public/js/t4web-calendar'
+            );
+        }
+
+        if (!$this->fileSystem->has('/public/js/t4web-calendar/jquery-ui-1.9.2.custom.min.js')) {
             $this->fileSystem->symlink(
                 $vendorSiteConfigRootPath . '/public/js/t4web-calendar/',
                 getcwd() . '/public/js/t4web-calendar'

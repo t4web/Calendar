@@ -3,8 +3,8 @@
 namespace T4webCalendar\Controller\User;
 
 use Zend\Mvc\Controller\AbstractActionController;
-
 use T4webBase\Domain\Service\BaseFinder;
+use T4webCalendar\Controller\ViewModel\ShowViewModel;
 
 class ShowController extends AbstractActionController
 {
@@ -30,11 +30,6 @@ class ShowController extends AbstractActionController
      */
     public function defaultAction()
     {
-        /** @var $calendar CalendarCollection */
-        $calendar = $this->finder->findMany();
-
-        $this->view->setCalendar($calendar);
-
         return $this->view;
     }
 

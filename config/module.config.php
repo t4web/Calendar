@@ -26,11 +26,32 @@ return array(
                     ),
                 ),
             ),
+            'calendar-ajax-default' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/calendar/ajax/default',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'T4webCalendar\Controller\User',
+                        'controller' => 'Ajax',
+                        'action' => 'default',
+                    ),
+                ),
+            ),
+            'calendar-ajax-save' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/calendar/ajax/save',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'T4webCalendar\Controller\User',
+                        'controller' => 'Ajax',
+                        'action' => 'save',
+                    ),
+                ),
+            ),
         ),
     ),
 
     'console' => array(
-
         'router' => array(
             'routes' => array(
                 'calendar-init' => array(
@@ -74,6 +95,11 @@ return array(
                 'table' => 'calendar',
                 'field' => 'id',
                 'buildMethod' => 'addFilterIn',
+            ),
+            'date' => array(
+                'table' => 'calendar',
+                'field' => 'date',
+                'buildMethod' => 'addFilterEqual',
             ),
         ),
     ),

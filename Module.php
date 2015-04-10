@@ -101,22 +101,22 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface,
                     $fileSystem = new Filesystem(new LocalAdapter(getcwd()));
                     $fileSystem->addPlugin(new LocalSymlinkPlugin\Symlink());
 
-                    return new InitController(
+                    return new Controller\Console\InitController(
                         $sl->get('Zend\Db\Adapter\Adapter'),
                         $fileSystem
                     );
                 },
                 'T4webCalendar\Controller\User\Show' => function (ControllerManager $cm) {
                     $sl = $cm->getServiceLocator();
-                    return new ShowController(
+                    return new Controller\User\ShowController(
                         $sl->get('T4webCalendar\Calendar\Service\Finder'),
                         $sl->get('T4webCalendar\Controller\ViewModel\ShowViewModel')
                     );
                 },
                 'T4webCalendar\Controller\User\Ajax' => function (ControllerManager $cm) {
                     $sl = $cm->getServiceLocator();
-                    return new CreateAjaxController(
-                        $sl->get('T4webCalendar\ViewModel\AjaxViewModel')
+                    return new Controller\User\AjaxController(
+                        $sl->get('T4webCalendar\Controller\ViewModel\AjaxViewModel')
                     );
                 },
             ),
