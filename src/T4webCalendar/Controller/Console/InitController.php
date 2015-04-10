@@ -57,6 +57,13 @@ class InitController extends AbstractActionController
             );
         }
 
+        if (!$this->fileSystem->has('/public/css/t4web-calendar/calendar.css')) {
+            $this->fileSystem->symlink(
+                $vendorSiteConfigRootPath . '/public/css/t4web-calendar/',
+                getcwd() . '/public/css/t4web-calendar'
+            );
+        }
+
         return "Success completed" . PHP_EOL;
     }
 

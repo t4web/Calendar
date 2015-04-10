@@ -10,12 +10,12 @@
     font-weight: normal;
 }
 
-.datapicker-calendar .ui-datepicker .ui-datepicker-current-day .ui-state-active {
+.ui-datepicker .ui-datepicker-current-day .ui-state-active {
     color: #555 !important;
 }
 
-.datapicker-calendar .theme-frost .ui-datepicker .ui-state-active {
-    background: none repeat scroll 0 0 #fff !important;
+.theme-frost .ui-datepicker .ui-state-active {
+    background: none repeat scroll 0 0 #e63c3b !important;
 }
 
 .datapicker-calendar .ui-datepicker .ui-state-highlight a {
