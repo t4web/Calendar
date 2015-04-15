@@ -43,20 +43,6 @@ class InitController extends AbstractActionController
             );
         }
 
-        if (!$this->fileSystem->has('/public/js/t4web-calendar/jquery-ui.multidatespicker.js')) {
-            $this->fileSystem->symlink(
-                $vendorSiteConfigRootPath . '/public/js/t4web-calendar/',
-                getcwd() . '/public/js/t4web-calendar'
-            );
-        }
-
-        if (!$this->fileSystem->has('/public/js/t4web-calendar/jquery-ui-1.9.2.custom.min.js')) {
-            $this->fileSystem->symlink(
-                $vendorSiteConfigRootPath . '/public/js/t4web-calendar/',
-                getcwd() . '/public/js/t4web-calendar'
-            );
-        }
-
         if (!$this->fileSystem->has('/public/css/t4web-calendar/calendar.css')) {
             $this->fileSystem->symlink(
                 $vendorSiteConfigRootPath . '/public/css/t4web-calendar/',
