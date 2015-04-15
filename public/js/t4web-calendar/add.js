@@ -45,7 +45,9 @@ $(function () {
                     dates.push(v.date);
                 });
 
-                $('#bs-datepicker-inline').multiDatesPicker('addDates', dates);
+                if(dates.length != 0) {
+                    $('#bs-datepicker-inline').multiDatesPicker('addDates', dates);
+                }
             }
         },
 
