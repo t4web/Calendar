@@ -30,6 +30,20 @@ class ShowController extends AbstractActionController
      */
     public function defaultAction()
     {
+        $year = $this->params('year', date('Y'));
+        $currentDate = \DateTime::createFromFormat('Y-m-d', $year . '-01-01');
+
+        $this->view->setCurrent($currentDate);
+
+        /* @var $calendar \T4webCalendar\Calendar\CalendarCollection */
+        $calendar = $this->finder->findMany(['T4webCalendar' => ['Calendar' => [
+            'dateFrom' => $currentDate->format("Y-m-d"),
+            'dateTo' => $currentDate->modify('+1 year -1 day')->format("Y-m-d"),
+            'orderBy' => 'date',
+        ]]]);
+
+        $this->view->setCalendar($calendar);
+
         return $this->view;
     }
 

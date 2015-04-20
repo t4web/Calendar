@@ -9,6 +9,7 @@ class Calendar extends Entity
 
     protected $name;
     protected $date;
+    protected $type;
 
     /**
      * @return mixed
@@ -29,6 +30,15 @@ class Calendar extends Entity
     /**
      * @return mixed
      */
+    public function getDateTime()
+    {
+        $date = new \DateTime($this->date);
+        return $date;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getDate()
     {
         return $this->date;
@@ -40,6 +50,22 @@ class Calendar extends Entity
     public function setDate($date)
     {
         $this->date = $date;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return Type::create($this->type);
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
 }

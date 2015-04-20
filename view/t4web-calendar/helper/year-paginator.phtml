@@ -1,0 +1,24 @@
+<?php $viewModel = $this->viewModel()->getCurrent(); ?>
+
+<ul class="pagination">
+
+    <li><a href="<?= $this->url('calendar', ['year' => $viewModel->getPrevPage()->format('Y')]); ?>">«</a></li>
+
+    <?php for ($i = 0; $i < 5; $i++): ?>
+        <?php $next = $viewModel->getNext(); ?>
+        <?php if ($viewModel->isCurrent()): ?>
+            <li class="active">
+                <a href="<?= $this->url('calendar', ['year' => $next->format('Y')]); ?>"><?= $next->format('Y'); ?>
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+        <?php else: ?>
+            <li>
+                <a href="<?= $this->url('calendar', ['year' => $next->format('Y')]); ?>"><?= $next->format('Y'); ?></a>
+            </li>
+        <?php endif; ?>
+    <?php endfor; ?>
+
+
+    <li><a href="<?= $this->url('calendar', ['year' => $viewModel->getNextPage()->format('Y')]); ?>">»</a></li>
+</ul>

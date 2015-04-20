@@ -16,9 +16,9 @@ return array(
     'router' => array(
         'routes' => array(
             'calendar' => array(
-                'type' => 'Literal',
+                'type' => 'Segment',
                 'options' => array(
-                    'route' => '/calendar',
+                    'route' => '/calendar[/:year]',
                     'defaults' => array(
                         '__NAMESPACE__' => 'T4webCalendar\Controller\User',
                         'controller' => 'Show',
@@ -26,14 +26,14 @@ return array(
                     ),
                 ),
             ),
-            'calendar-ajax-default' => array(
+            'calendar-ajax-type-list' => array(
                 'type' => 'Literal',
                 'options' => array(
-                    'route' => '/calendar/ajax/default',
+                    'route' => '/calendar/ajax/type-list',
                     'defaults' => array(
                         '__NAMESPACE__' => 'T4webCalendar\Controller\User',
                         'controller' => 'Ajax',
-                        'action' => 'default',
+                        'action' => 'type-list',
                     ),
                 ),
             ),
@@ -45,6 +45,17 @@ return array(
                         '__NAMESPACE__' => 'T4webCalendar\Controller\User',
                         'controller' => 'Ajax',
                         'action' => 'save',
+                    ),
+                ),
+            ),
+            'calendar-ajax-delete' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/calendar/ajax/delete',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'T4webCalendar\Controller\User',
+                        'controller' => 'Ajax',
+                        'action' => 'delete',
                     ),
                 ),
             ),
@@ -68,14 +79,21 @@ return array(
         )
     ),
 
+    'view_helpers' => array(
+        'invokables' => array(
+            'calendarYearPaginator' => 'T4webCalendar\View\Helper\CalendarYearPaginator',
+        ),
+    ),
+
     'db' => array(
         'tables' => array(
             't4webcalendar-calendar' => array(
                 'name' => 'calendar',
                 'columnsAsAttributesMap' => array(
                     'id' => 'id',
-                    'text' => 'text',
+                    'name' => 'name',
                     'date' => 'date',
+                    'type' => 'type',
                 ),
             ),
         ),
@@ -100,6 +118,21 @@ return array(
                 'table' => 'calendar',
                 'field' => 'date',
                 'buildMethod' => 'addFilterEqual',
+            ),
+            'dateFrom' => array(
+                'table' => 'calendar',
+                'field' => 'date',
+                'buildMethod' => 'addFilterMoreOrEqual',
+            ),
+            'dateTo' => array(
+                'table' => 'calendar',
+                'field' => 'date',
+                'buildMethod' => 'addFilterLessOrEqual',
+            ),
+            'orderBy' => array(
+                'table' => 'calendar',
+                'field' => 'date',
+                'buildMethod' => 'order',
             ),
         ),
     ),

@@ -4,6 +4,7 @@ namespace T4webCalendar\Calendar\InputFilter;
 
 use T4webBase\InputFilter\InputFilter;
 use T4webBase\InputFilter\Element\Id;
+use T4webBase\InputFilter\Element\Int;
 use T4webBase\InputFilter\Element\Text;
 use T4webBase\InputFilter\Element\Date;
 
@@ -27,6 +28,11 @@ class Update extends InputFilter
         $date = new Date('date', 'Y-m-d');
         $date->setRequired(true);
         $this->add($date);
+
+        // type
+        $type = new Int('type');
+        $type->setRequired(false);
+        $this->add($type);
 
     }
 }

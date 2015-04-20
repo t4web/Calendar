@@ -1,11 +1,15 @@
 <?php /* @var $viewModel \T4webCalendar\Controller\ViewModel\ShowViewModel */ ?>
 <?php $viewModel = $this->viewModel()->getCurrent(); ?>
 
-<?php $this->headScript()->appendFile($this->basePath() . '/js/t4web-calendar/jquery-ui-1.9.2.custom.min.js');?>
-<?php $this->headScript()->appendFile($this->basePath() . '/js/t4web-calendar/jquery-ui.multidatespicker.js');?>
 <?php $this->headScript()->appendFile($this->basePath() . '/js/t4web-calendar/add.js');?>
 
 <?php $this->headLink()->prependStylesheet($this->basePath() . '/css/t4web-calendar/calendar.css');?>
+
+<script>
+    init.push(function () {
+        initDatapicker(<?= $viewModel->getCurrent()->format('Y'); ?>);
+    });
+</script>
 
 <div class="page-header">
     <div class="row">
@@ -16,7 +20,128 @@
 <div class="row">
     <div class="col-xs-12">
 
-        <div class="panel panel-dark widget-profile datapicker-calendar" id="bs-datepicker-inline"></div>
+        <div class="panel panel-default plain">
+            <!-- Start .panel -->
+            <div class="panel-heading">
+                <h4 class="panel-title">Year <?= $viewModel->getCurrent()->format('Y'); ?></h4>
+            </div>
+            <div class="panel-body" style="overflow-x: auto;">
+                <table class="table table-bordered table-calendar">
+                    <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+
+                        <?php foreach($viewModel->getDaysNames() as $i => $days): ?>
+                            <?php foreach($days as $dayNumber => $day): ?>
+                                <th class="text-center <?= (in_array($dayNumber, array(0, 6))) ? 'active' : ''; ?>"><?= $day; ?></th>
+                            <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <?php foreach($viewModel->getMonthsList() as $monthNumber => $month): ?>
+                        <tr>
+                            <td><?= $month; ?></td>
+
+                            <?php $i = 1; ?>
+                            <?php foreach($viewModel->getDaysList($monthNumber, $viewModel->getCurrent()->format('Y')) as $day): ?>
+                                <?php if($day != null): ?>
+                                    <?php if($viewModel->getCalendarByDate($day->format('Y-m-d')) != null && $viewModel->getCalendarByDate($day->format('Y-m-d'))->getType()->getCode() == \T4webCalendar\Calendar\Type::DAY_OF): ?>
+                                        <td data-toggle="tooltip" title="" data-original-title="<?= $viewModel->getCalendarByDate($day->format('Y-m-d'))->getName(); ?>" class="active text-center" data-date="<?= $day->format('Y-m-d'); ?>">
+                                            <?= $day->format('d'); ?>
+                                        </td>
+                                    <?php elseif($viewModel->getCalendarByDate($day->format('Y-m-d')) != null && $viewModel->getCalendarByDate($day->format('Y-m-d'))->getType()->getCode() == \T4webCalendar\Calendar\Type::HOLIDAY): ?>
+                                        <td data-toggle="tooltip" title="" data-original-title="<?= $viewModel->getCalendarByDate($day->format('Y-m-d'))->getName(); ?>" class="active text-center bg-success" data-date="<?= $day->format('Y-m-d'); ?>">
+                                            <?= $day->format('d'); ?>
+                                        </td>
+                                    <?php else: ?>
+                                        <td class="text-center <?= (in_array($day->format('w'), array(0, 6))) ? 'active' : ''; ?>" data-date="<?= $day->format('Y-m-d'); ?>">
+                                            <?= $day->format('d'); ?>
+                                        </td>
+                                    <?php endif; ?>
+                                <?php else: ?>
+                                    <td class="<?= (($i == 6) || ($i == 7)) ? 'active' : ''; ?>"></td>
+                                <?php endif; ?>
+                                <?php ($i == 7) ? $i = 1 : $i++; ?>
+                            <?php endforeach; ?>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+
+                <div class="table-light">
+                    <div class="table-header">
+                        <div class="table-caption">
+                            All holidays
+                        </div>
+                    </div>
+                    <table id="holidays" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th width="200px">Date</th>
+                            <th width="200px">Type</th>
+                            <th>Name</th>
+                            <th width="200px">Actions</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <?php foreach($viewModel->getCalendar() as $key => $calendar): ?>
+                            <tr>
+                                <td>
+                                        <span data-name="date" data-pk="<?= $key; ?>" data-value="<?= $calendar->getDateTime()->format('Y-m-d'); ?>">
+                                            <?= $calendar->getDateTime()->format('Y-m-d'); ?>
+                                        </span>
+                                <td>
+                                        <span data-name="type" data-pk="<?= $key; ?>" data-value="<?= $calendar->getType()->getCode(); ?>">
+                                            <?= $calendar->getType()->getName(); ?>
+                                        </span>
+                                </td>
+                                <td>
+                                        <span data-name="name" data-pk="<?= $key; ?>" data-value="<?= $calendar->getName(); ?>">
+                                            <?= $calendar->getName(); ?>
+                                        </span>
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-xs btn-labeled btn-warning" id="btn-calendar-edit">
+                                        <span class="btn-label icon fa fa-pencil"></span>
+                                        Edit
+                                    </button>
+                                    <button class="btn btn-primary" style="display: none;" data-id="<?= $calendar->getId(); ?>">save</button>
+                                    <button class="btn btn-xs btn-labeled btn-danger" data-id="<?= $calendar->getId(); ?>" data-date="<?= $calendar->getDate(); ?>" id="btn-calendar-delete">
+                                        <span class="btn-label icon fa fa-times"></span>
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <tr>
+                            <td>
+                                <input type="text" class="form-control bs-datepicker" name="date" placeholder="Date">
+                            </td>
+                            <td>
+                                <select class="form-control form-group-margin" name="type">
+                                    <?php foreach($viewModel->getTypes() as $code => $type): ?>
+                                        <option value="<?= $code; ?>"><?= $type; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" name="name" placeholder="Name">
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-labeled btn-success"><span class="btn-label icon fa fa-plus"></span>Add</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <?= $this->calendarYearPaginator($viewModel->getCurrent()); ?>
+            </div>
+        </div>
 
     </div>
 </div>

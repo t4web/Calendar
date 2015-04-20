@@ -33,6 +33,7 @@ class InitController extends AbstractActionController
     public function runAction()
     {
         $this->createTableCalendar();
+        $this->addColumnType();
 
         $vendorSiteConfigRootPath = dirname(dirname(dirname(dirname(__DIR__))));
 
@@ -65,9 +66,29 @@ class InitController extends AbstractActionController
 
         $date = new Column\Date('date');
         $date->setNullable(true);
+
         $table->addColumn($date);
 
+        $table->addColumn(new Column\Integer('type', false, 1));
+
         $table->addConstraint(new Constraint\PrimaryKey('id'));
+
+        $sql = new Sql($this->dbAdapter);
+
+        try {
+            $this->dbAdapter->query(
+                $sql->getSqlStringForSqlObject($table),
+                Adapter::QUERY_MODE_EXECUTE
+            );
+        } catch (PDOException $e) {
+            return $e->getMessage() . PHP_EOL;
+        }
+    }
+
+    private function addColumnType() {
+
+        $table = new Ddl\AlterTable('calendar');
+        $table->addColumn(new Column\Integer('type', false, 1));
 
         $sql = new Sql($this->dbAdapter);
 

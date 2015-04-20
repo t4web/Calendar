@@ -99,6 +99,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface,
 
                 'T4webCalendar\Calendar\InputFilter\Create' => 'T4webCalendar\Calendar\InputFilter\Create',
                 'T4webCalendar\Calendar\InputFilter\Update' => 'T4webCalendar\Calendar\InputFilter\Update',
+
             ),
         );
     }
@@ -130,6 +131,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface,
                     return new Controller\User\AjaxController(
                         $sl->get('T4webCalendar\Calendar\Service\Finder'),
                         $sl->get('T4webCalendar\Calendar\Service\Create'),
+                        $sl->get('T4webCalendar\Calendar\Service\Update'),
                         $sl->get('T4webCalendar\Calendar\Service\Delete'),
                         $sl->get('T4webCalendar\Controller\ViewModel\AjaxViewModel')
                     );
@@ -137,4 +139,5 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface,
             ),
         );
     }
+
 }
